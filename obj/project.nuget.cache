@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "2a3IgB40ISg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\hp\\Desktop\\c# game\\c# game.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hp\\.nuget\\packages\\raylib-cs\\7.0.1\\raylib-cs.7.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
