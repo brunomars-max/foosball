@@ -16,7 +16,7 @@ class player
 		this.y = y;
 		this.x = x;
 
-		rect = new Rectangle(x , y , 35 , 35);
+		rect = new Rectangle(x , y , 45 , 45);
 	}
 }
 
