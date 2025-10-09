@@ -32,7 +32,7 @@ namespace ball
             y += distancey;
 
             //bounce  up,down
-            if ((y + 55) > 400)
+            if ((y + 55) > 772)
             {
 
                 speedy = -speedy;

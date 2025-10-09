@@ -46,51 +46,48 @@ Texture2D foosball = Raylib.LoadTexture("graph.jpg");
 Rectangle leftgoalpost = new Rectangle(0, 175, 50, 100);
 Rectangle rightgoalpost = new Rectangle(1150, 175, 50, 100);
 
-void kickball(List<player> typerofplayer , int numberofplayers)
+void kickball(List<player> players, int numberoftheplayers)
 {
-  //check if player hit the ball
-    for (int i = 0; i < numberofplayers; i += 1)
+    const float ballRadius = 50f;   // match your drawing/collision radius
+    const float gap = 20f;           // small gap so ball sits outside the player
+    const float kickSpeed = 600f;   // pixels per second (recommended). Adjust as needed.
+    const float playerwidthheight = 50;
+
+    for (int i = 0; i < numberoftheplayers; i++)
     {
-        bool answer = Raylib.CheckCollisionCircleRec(new System.Numerics.Vector2(gameball.x, gameball.y), 40, typerofplayer [i].rect);
+        var pRect = players[i].rect;
+        var playerCenter = new System.Numerics.Vector2(pRect.X + playerwidthheight / 2f, pRect.Y + playerwidthheight / 2f);
 
-        if (answer == true)
+        // collision test (uses same radius)
+        bool hascollided = Raylib.CheckCollisionCircleRec(new System.Numerics.Vector2(gameball.x, gameball.y), ballRadius, pRect);
+        if (hascollided)
         {
+            // compute direction from player center to ball (away from player)
+            var dir = new System.Numerics.Vector2(gameball.x - playerCenter.X, gameball.y - playerCenter.Y);
+            float dist = MathF.Sqrt(dir.X * dir.X + dir.Y * dir.Y);
 
-            System.Numerics.Vector2 direction = new System.Numerics.Vector2(gameball.x - typerofplayer[i].rect.X,
+            // avoid divide-by-zero; if exactly overlapping, kick to the right
+            if (dist < 0.0001f)
+            {
+                dir = new System.Numerics.Vector2(1f, 0f);
+                dist = 1f;
+            }
+            dir.X /= dist;
+            dir.Y /= dist;
 
-                                                                             gameball.y - typerofplayer [i].rect.Y);
+            // set speed (we use pixels/sec here — see note below)
+            gameball.speedx = dir.X * kickSpeed;
+            gameball.speedy = dir.Y * kickSpeed;
 
-            double distance = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+            // push the ball just outside the player
+            float halfPlayer = playerwidthheight / 2f; // assumes square players; adapt if rectangular
+            float pushDistance = halfPlayer + ballRadius + gap;
+            gameball.x = playerCenter.X + dir.X * pushDistance;
+            gameball.y = playerCenter.Y + dir.Y * pushDistance;
 
-            direction.X = (float)(direction.X / distance);
-            direction.Y = (float)(direction.Y / distance);
-
-
-            int kickspeed = 40;
-
-            gameball.speedx = direction.X * kickspeed;
-            gameball.speedy = direction.Y * kickspeed;
-
-
-
-
-
-
-            float playerscenterX =typerofplayer [i].rect.X + 17.5f;
-
-            float pushdistace = 50;
-
-
-            gameball.x = playerscenterX + (17.5f + pushdistace) * direction.X;
-
-            float playerscenterY = typerofplayer [i].rect.Y + 17.5f;
-            gameball.y = playerscenterY + (17.5f + pushdistace) * direction.Y;
-
+            // stop further kicks this frame
+            break;
         }
-
-
-
-
     }
 }
 
@@ -108,8 +105,8 @@ kickball(attarkers,3);
     if (leftgoalhit == true)
     {
         Console.WriteLine("goallllll!!!");
-        gameball.x = width / 2;//reset
-        gameball.y = height / 2; //reset
+       // gameball.x = width / 2;//reset
+        // gameball.y = height / 2; //reset
     }
 
     // detection on right goal post
@@ -118,8 +115,8 @@ kickball(attarkers,3);
     if (rightgoalhit == true)
     {
         Console.WriteLine("goallllll!!!");
-        gameball.x = width / 2;//reset
-        gameball.y = height / 2; //reset
+        // gameball.x = width / 2;//reset
+        // gameball.y = height / 2; //reset
     }
 
     Raylib.ClearBackground(Color.Lime);
