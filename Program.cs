@@ -32,6 +32,31 @@ new player(1000,515),
 };
 
 
+
+List<player> defendersOPP = new List<player>()
+{
+new player(400,100),
+new player(400,250),
+new player(400,400),
+new player(400,550)
+};
+
+
+List<player> midfieldersOPP = new List<player>()
+{
+new player(650,175),
+new player(650,325),
+new player(650,475),
+};
+
+
+List<player> attarkersOPP = new List<player>()
+{
+new player(1100,145),
+new player(1100,325),
+new player(1100,515),
+};
+
 gameball.x = 600;
 gameball.y = 200;
 gameball.speedx = 40;
@@ -143,6 +168,42 @@ kickball(attarkers,3);
     Raylib.DrawRectangleRec(attarkers[1].rect, Color.Black);
     Raylib.DrawRectangleRec(attarkers[2].rect, Color.Black);
 
+    //opp
+
+     Raylib.DrawRectangleRec(defendersOPP[0].rect, Color.Green);
+    Raylib.DrawRectangleRec(defendersOPP[1].rect, Color.Green);
+    Raylib.DrawRectangleRec(defendersOPP[2].rect, Color.Green);
+    Raylib.DrawRectangleRec(defendersOPP[3].rect, Color.Green);
+
+    Raylib.DrawRectangleRec(midfieldersOPP[0].rect, Color.Green);
+    Raylib.DrawRectangleRec(midfieldersOPP[1].rect, Color.Green);
+    Raylib.DrawRectangleRec(midfieldersOPP[2].rect, Color.Green);
+
+
+    Raylib.DrawRectangleRec(attarkersOPP[0].rect, Color.Green);
+    Raylib.DrawRectangleRec(attarkersOPP[1].rect, Color.Green);
+    Raylib.DrawRectangleRec(attarkersOPP[2].rect, Color.Green);
+
+    System.Numerics.Vector2 startpos_defenders = new System.Numerics.Vector2(defenders[0].rect.X , defenders[0].rect.Y);
+    System.Numerics.Vector2 endpos_defenders = new System.Numerics.Vector2(defenders[3].rect.X , defenders[3].rect.Y);
+
+        System.Numerics.Vector2 startpos_midfielders = new System.Numerics.Vector2(midfielders[0].rect.X , midfielders[0].rect.Y);
+    System.Numerics.Vector2 endpos_midfielders = new System.Numerics.Vector2(midfielders[2].rect.X , midfielders[2].rect.Y);
+
+      System.Numerics.Vector2 startpos_attarkers= new System.Numerics.Vector2(attarkers[0].rect.X , attarkers[0].rect.Y);
+    System.Numerics.Vector2 endpos_attarkers = new System.Numerics.Vector2(attarkers[2].rect.X , attarkers[2].rect.Y);
+
+    System.Numerics.Vector2 startpos_defendersOPP = new System.Numerics.Vector2(defendersOPP[0].rect.X , defendersOPP[0].rect.Y);
+    System.Numerics.Vector2 endpos_defendersOPP = new System.Numerics.Vector2(defendersOPP[3].rect.X , defendersOPP[3].rect.Y);
+
+     System.Numerics.Vector2 startpos_midfieldersOPP = new System.Numerics.Vector2(midfieldersOPP[0].rect.X , midfieldersOPP[0].rect.Y);
+    System.Numerics.Vector2 endpos_midfieldersOPP = new System.Numerics.Vector2(midfielders[2].rect.X , midfieldersOPP[2].rect.Y);
+
+      System.Numerics.Vector2 startpos_attarkersOPP= new System.Numerics.Vector2(attarkersOPP[0].rect.X , attarkersOPP[0].rect.Y);
+    System.Numerics.Vector2 endpos_attarkersOPP = new System.Numerics.Vector2(attarkersOPP[2].rect.X , attarkersOPP[2].rect.Y);
+    Raylib.DrawLineEx(startpos_defenders , endpos_defenders , 10 , Color.White);    
+
+    
     Raylib.EndDrawing();
 
 
@@ -172,6 +233,31 @@ kickball(attarkers,3);
 
 
         if (attarkers[0].rect.Y > 0)
+        {
+            for (int number = 0; number < 3; number += 1)
+
+                attarkers[number].rect.Y -= 5;
+
+        }
+
+      if (defendersOPP[0].rect.Y > 0)
+        {
+            for (int number = 0; number < 4; number += 1)
+
+                defenders[number].rect.Y -= 5;
+
+        }
+
+        if (midfieldersOPP[0].rect.Y > 0)
+        {
+            for (int number = 0; number < 3; number += 1)
+
+                midfielders[number].rect.Y -= 5;
+
+        }
+
+
+        if (attarkersOPP[0].rect.Y > 0)
         {
             for (int number = 0; number < 3; number += 1)
 
@@ -212,6 +298,31 @@ kickball(attarkers,3);
         }
 
 
+
+        if (defendersOPP[3].rect.Y < height - 35)
+        {
+            for (int number = 0; number < 4; number += 1)
+
+                defenders[number].rect.Y += 5;
+
+        }
+
+        if (midfieldersOPP[2].rect.Y < height - 35)
+        {
+            for (int number = 0; number < 3; number += 1)
+
+                midfielders[number].rect.Y += 5;
+
+        }
+
+
+        if (attarkersOPP[2].rect.Y < height - 35)
+        {
+            for (int number = 0; number < 3; number += 1)
+
+                attarkers[number].rect.Y += 5;
+
+        }
 
     }
 
